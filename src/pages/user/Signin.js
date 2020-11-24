@@ -1,7 +1,7 @@
 import Layout from "../Layouts/layout";
 import {useState} from "react";
-import { signin } from "../API/auth"
-import {showAlert, showLoading} from "../../utilities";
+import {authenticate, signin} from "../API/auth"
+import {showAlert, showLoading, redirectUser} from "../../utilities";
 
 const Signin = () => {
 
@@ -26,9 +26,17 @@ const Signin = () => {
     const clickSubmit = e => {
         e.preventDefault()
         setValues({...values, loading: true, error: false, success: false})
+        if(email === "" || password ===  ""){
+            setValues({
+                ...values,
+                loading: false,
+                error: true,
+                errorMessage: "Email/Password Cannot be blank"
+            })
+        }
         signin({email, password}).then(data => {
-            console.log(data)
             if(data.status === 'error'){
+                console.log(data)
                 setValues({
                     ...values,
                     error: true,
@@ -37,15 +45,18 @@ const Signin = () => {
                     loading: false
                 })
             }else {
-                setValues({
-                    ...values,
-                    name: '',
-                    email: '',
-                    password: '',
-                    error: false,
-                    errorMessage: '',
-                    loading: false,
-                    success: true
+                console.log(data)
+                authenticate(data, () => {
+                    setValues({
+                        ...values,
+                        name: '',
+                        email: '',
+                        password: '',
+                        error: false,
+                        errorMessage: '',
+                        loading: false,
+                        success: true
+                    })
                 })
             }
         }).catch(err => {
@@ -69,6 +80,7 @@ const Signin = () => {
                     className='form-control'
                     onChange={handleChange('email')}
                     value={email}
+                    required={true}
                 />
             </div>
             <div className='form-group'>
@@ -78,6 +90,7 @@ const Signin = () => {
                     className='form-control'
                     onChange={handleChange('password')}
                     value={password}
+                    required={true}
                 />
             </div>
             <button
@@ -99,6 +112,7 @@ const Signin = () => {
             {success &&  showAlert({type: 'success', message: 'Signed In Successfully'})}
             {error && showAlert({type: 'danger', message: errorMessage})}
             {SigninForm()}
+            {redirectUser(redirectToReferrer)}
         </Layout>
     )
 }
