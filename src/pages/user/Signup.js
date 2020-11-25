@@ -60,6 +60,7 @@ const Signup = () => {
                     className='form-control'
                     onChange={handleChange('name')}
                     value={name}
+                    required
                 />
             </div>
             <div className='form-group'>
@@ -69,6 +70,7 @@ const Signup = () => {
                     className='form-control'
                     onChange={handleChange('email')}
                     value={email}
+                    required
                 />
             </div>
             <div className='form-group'>
@@ -78,6 +80,7 @@ const Signup = () => {
                     className='form-control'
                     onChange={handleChange('password')}
                     value={password}
+                    required
                 />
             </div>
             <button

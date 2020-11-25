@@ -80,7 +80,7 @@ const Signin = () => {
                     className='form-control'
                     onChange={handleChange('email')}
                     value={email}
-                    required={true}
+                    required
                 />
             </div>
             <div className='form-group'>
@@ -90,7 +90,7 @@ const Signin = () => {
                     className='form-control'
                     onChange={handleChange('password')}
                     value={password}
-                    required={true}
+                    required
                 />
             </div>
             <button

@@ -31,12 +31,14 @@ export const showLoading = () => {
     </div>
 }
 
-const user = isAuthenticated();
+const authData = isAuthenticated();
 export const redirectUser = (redirUser) => {
     if(redirUser){
-        if(user && user.role === 1){
+        if(authData && authData.user.role === 1){
             return <Redirect to='/admin/dashboard'/>
         }
         return <Redirect to='/user/dashboard'/>
     }
 }
+
+export const isAdmin = authData && authData.user.role === 1

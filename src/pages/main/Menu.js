@@ -1,6 +1,6 @@
 import {Link, withRouter} from "react-router-dom"
 import {signout} from "../API/auth"
-import {isAuthenticated} from "../../utilities"
+import {isAdmin, isAuthenticated} from "../../utilities"
 import {Fragment} from "react";
 
 const isActive = (history, path) => {
@@ -11,6 +11,7 @@ const isActive = (history, path) => {
     }
 }
 const Menu = ( { history }) => {
+    const adminPath = isAdmin ? '/admin/dashboard' : '/user/dashboard'
     return <div>
         <ul className='nav nav-tabs bg-dark text-white'>
             <li className='nav-item'>
@@ -30,7 +31,7 @@ const Menu = ( { history }) => {
             {isAuthenticated() && (
                 <Fragment>
                     <li className='nav-item'>
-                        <Link className='nav-link' style={isActive(history, '/user/dashboard')} to='/user/dashboard'>Dashboard</Link>
+                        <Link className='nav-link' style={isActive(history, adminPath)} to={adminPath}>Dashboard</Link>
                     </li>
                     <li className='nav-item'>
                         <Link
